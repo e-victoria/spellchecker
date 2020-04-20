@@ -1,4 +1,4 @@
-export class BetterStringHasher {
+export default class StringHasher {
     public hash(s: string): number {
         let hash: number = 0;
         if (s.length == 0) return hash;

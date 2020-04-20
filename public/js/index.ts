@@ -1,4 +1,4 @@
-import InputReader from './InputReader';
+import SpellChecker from './SpellChecker';
 
-const inputReader: InputReader = new InputReader();
-console.log(inputReader.getInputValue());
+const spellChecker: SpellChecker = new SpellChecker();
+spellChecker.init();

@@ -1,5 +1,5 @@
 export default class InputReader {
-    getInputValue(): string {
+    getInputValue(callback): string {
         let inputValue: string = '';
         const btn = document.getElementById('box-btn');
 
@@ -7,6 +7,7 @@ export default class InputReader {
             e.preventDefault();
             const input = (<HTMLInputElement>document.getElementById('user-input')).value;
             if (input) {
+                callback(input);
                 inputValue = input;
             } else {
                 alert('This field can\'t be empty!');
