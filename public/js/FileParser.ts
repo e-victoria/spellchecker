@@ -4,11 +4,7 @@ export default class FileParser {
     constructor(filepath) {
         this.filepath = filepath;
     }
-
-    getFile() {
-        
-    }
-
+    
     readFile(): Map<string, boolean> {
         let wordsList: Map<string, boolean> = new Map();
         const xmlHttpRequest: XMLHttpRequest = new XMLHttpRequest();

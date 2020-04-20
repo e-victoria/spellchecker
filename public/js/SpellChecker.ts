@@ -1,50 +1,50 @@
 import InputReader from './InputReader';
-import StringHasher from './StringHasher';
 import FileParser from './FileParser';
-import { stringify } from 'querystring';
 
 export default class SpellChecker {
     private abc = 'abcdefghijklmnopqrstuvwxyz'.split('');
-    private wordsList: Map<string, boolean>;
     init() {
         const that = this;
         function callback(word: () => void) {
-            that.checkWord(word);
+            const filepath: string = __dirname + 'resources/wordlist.txt';
+            const fileReader: FileParser = new FileParser(filepath)
+    
+            const wordsList: Map<string, boolean> = fileReader.readFile();
+            that.checkWord(word, wordsList);
         }
         const inputReader: InputReader = new InputReader();
         const word = inputReader.getInputValue(callback);
     }
 
-    checkWord(word) {
-        const filepath: string = __dirname + 'resources/wordlist.txt';
-        const fileReader: FileParser = new FileParser(filepath)
-        const stringHasher: StringHasher = new StringHasher();
-
-        this.wordsList = fileReader.readFile();
-        if (this.wordsList.has(word)) {
-            alert('ok, it\'s a word!');
+    checkWord(word, wordsList) {
+        let replacement: Array<string>;
+        if (wordsList.has(word)) {
+            console.log('ok, it\'s a word!');
         }
         else {
-            const replacement = this.findWordReplacement(word);
+            replacement = this.findWordReplacement(word, wordsList);
             if (replacement.length > 0) {
-                alert(`Maybe you meant: ${replacement}?`);
+                console.log(`Maybe you meant: ${replacement}?`);
             } else {
-                alert('No replacements :(');
+                console.log('No replacements :(');
             }
         }
+        return replacement;
     }
 
-    findWordReplacement(word): Array<string> {
+    findWordReplacement(word, wordsList): Array<string> {
         let replacement: Array<string> = [];
         let newWord: string;
 
         for (let i: number = 0; i < word.length - 1; i++) {
             for (let letter of this.abc) {
                 newWord = word.substring(0, i) + letter + word.substring(i + 1, word.length);
-                if (this.wordsList.has(newWord)) {
-                    console.log(newWord);
+                if (wordsList.has(newWord)) {
                     replacement.push(newWord);
                 }
+                if (replacement.length > 5) {
+                    break;
+                } 
             }
         }
 
