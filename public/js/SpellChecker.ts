@@ -1,5 +1,6 @@
 import InputReader from './InputReader';
 import StringHasher from './StringHasher';
+import FileParser from './FileParser';
 
 export default class SpellChecker {
     init() {
@@ -12,8 +13,13 @@ export default class SpellChecker {
     }
 
     checkWord(word) {
+        const filepath: string = __dirname + 'resources/wordlist.txt';
+        const fileReader: FileParser = new FileParser(filepath)
         const stringHasher: StringHasher = new StringHasher();
-        const hashedInput = stringHasher.hash(word);
-        console.log(hashedInput);
+
+        const wordsList: Map<string, boolean> = fileReader.readFile();
+        if (wordsList.has(word)) {
+            alert('match!');
+        }
     }
 }
