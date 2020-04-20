@@ -1,0 +1,28 @@
+{
+  "name": "spellchecker",
+  "version": "1.0.0",
+  "description": "project for Codecool",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc public/js/*.ts && webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-victoria/spellchecker.git"
+  },
+  "author": "Victoria Eremeeva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/e-victoria/spellchecker/issues"
+  },
+  "homepage": "https://github.com/e-victoria/spellchecker#readme",
+  "devDependencies": {
+    "@types/node": "^13.13.0",
+    "http-server": "^0.12.1",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  }
+}
