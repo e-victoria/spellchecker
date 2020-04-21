@@ -14,42 +14,63 @@ describe("SpellChecker", function () {
 
   it("should find replacement 'accord' for 'bccord'", function () {
     const actual = spellChecker.checkWord('bccord', wordsList);
-    const expected = ['accord'];
+    const expected = new Set(['accord']);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("should find replacement 'taxicab' for 'taxiclab'", function () {
+    const actual = spellChecker.checkWord('taxiclab', wordsList);
+    const expected = new Set(['taxicab']);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("should find replacement 'pluckier' for 'pluckierd'", function () {
+    const actual = spellChecker.checkWord('pluckierd', wordsList);
+    const expected = new Set(['pluckier']);
 
     expect(actual).toEqual(expected);
   });
 
   it("should find replacement 'accord' for 'ccord'", function () {
     const actual = spellChecker.checkWord('ccord', wordsList);
-    const expected = ['chord', 'accord'];
+    const expected = new Set(['chord', 'accord']);
 
     expect(actual).toEqual(expected);
   });
 
   it("should find replacement 'scampi' for 'scmpi'", function () {
     const actual = spellChecker.checkWord('scmpi', wordsList);
-    const expected = ['scampi'];
+    const expected = new Set(['scampi']);
 
     expect(actual).toEqual(expected);
   });
 
   it("should find replacement 'rotting' for 'rottin'", function () {
     const actual = spellChecker.checkWord('rottin', wordsList);
-    const expected = ['rotten', 'rotting'];
+    const expected = new Set(['rotten', 'rotting']);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("should find replacement 'divestment' for 'rdivestment'", function () {
+    const actual = spellChecker.checkWord('rdivestment', wordsList);
+    const expected = new Set(['divestment']);
 
     expect(actual).toEqual(expected);
   });
 
   it("should find replacement 'aat' for 'cat'", function () {
     const actual = spellChecker.checkWord('aat', wordsList);
-    const expected = ['bat', 'cat', 'eat', 'fat', 'hat', 'mat'];
+    const expected = new Set(['bat', 'cat', 'eat', 'hat', 'mat', 'at']);
 
     expect(actual).toEqual(expected);
   });
 
   it("should find replacement 'nilhes' for 'cat'", function () {
     const actual = spellChecker.checkWord('nilhes', wordsList);
-    const expected = ['niches'];
+    const expected = new Set(['niches']);
 
     expect(actual).toEqual(expected);
   });

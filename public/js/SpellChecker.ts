@@ -8,7 +8,7 @@ export default class SpellChecker {
         function callback(word: () => void) {
             const filepath: string = __dirname + 'resources/wordlist.txt';
             const fileReader: FileParser = new FileParser(filepath)
-    
+
             const wordsList: Map<string, boolean> = fileReader.readFile();
             that.checkWord(word, wordsList);
         }
@@ -16,31 +16,54 @@ export default class SpellChecker {
         const word = inputReader.getInputValue(callback);
     }
 
-    checkWord(word, wordsList): Array<string> {
-        let replacement: Array<string>;
+    checkWord(word, wordsList) {
         let replacementByCharacterAdding: Array<string>;
+        let replacementByCharacterDeleting: Array<string>;
         let replacementByCharacterReplacement: Array<string>;
         if (wordsList.has(word)) {
             console.log('ok, it\'s a word!');
         }
         else {
+            replacementByCharacterDeleting = this.findWordByCharacterDeleting(word, wordsList);
             replacementByCharacterAdding = this.findWordByCharacterAdding(word, wordsList);
             replacementByCharacterReplacement = this.findWordByCharacterReplacement(word, wordsList);
-            replacement = replacementByCharacterReplacement.concat(replacementByCharacterAdding);
-            if (replacement.length > 0) {
-                console.log(`Maybe you meant: ${replacement}?`);
+            let replacement = new Set([...replacementByCharacterReplacement, ...replacementByCharacterAdding, ...replacementByCharacterDeleting]);
+            if (replacement.size > 0) {
+                console.log(`Maybe you meant: ${Array.from(replacement)}?`);
             } else {
                 console.log('No replacements :(');
             }
+            return replacement;
         }
-        return replacement;
     }
 
-    findWordByCharacterAdding(word, wordsList): Array<string> {
+    findWordByCharacterDeleting(word, wordsList) {
         let replacement: Array<string> = [];
         let newWord: string;
 
-        for (let i: number = 0; i < word.length - 1; i+=2) {
+        for (let i: number = 0; i < word.length; i++) {
+            newWord = word.substring(0, i) + word.substring(i + 1);
+            if (wordsList.has(newWord)) {
+                replacement.push(newWord);
+            }
+            if (replacement.length > 3) {
+                break;
+            }
+        }
+
+        // newWord = word.substring(0, i) + word.substring(i + 1, word.length);
+        //     if (wordsList.has(newWord)) {
+        //         replacement.push(newWord);
+        //     }
+
+        return replacement;
+    }
+
+    findWordByCharacterAdding(word, wordsList) {
+        let replacement: Array<string> = [];
+        let newWord: string;
+
+        for (let i: number = 0; i < word.length - 1; i += 2) {
 
             for (let letter of this.abc) {
                 newWord = word.substring(0, i) + letter + word.substring(i, word.length);
@@ -49,7 +72,7 @@ export default class SpellChecker {
                 }
                 if (replacement.length > 3) {
                     break;
-                } 
+                }
             }
         }
 
@@ -60,12 +83,12 @@ export default class SpellChecker {
             }
             if (replacement.length > 3) {
                 break;
-            } 
+            }
         }
         return replacement;
     }
 
-    findWordByCharacterReplacement(word, wordsList): Array<string> {
+    findWordByCharacterReplacement(word, wordsList) {
         let replacement: Array<string> = [];
         let newWord: string;
 
@@ -78,7 +101,7 @@ export default class SpellChecker {
                 }
                 if (replacement.length > 5) {
                     break;
-                } 
+                }
             }
         }
 
