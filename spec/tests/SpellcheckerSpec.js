@@ -13,21 +13,42 @@ describe("SpellChecker", function () {
   });
 
   it("should find replacement 'accord' for 'bccord'", function () {
-    const actual = spellChecker.findWordReplacement('bccord', wordsList);
+    const actual = spellChecker.checkWord('bccord', wordsList);
     const expected = ['accord'];
 
     expect(actual).toEqual(expected);
   });
 
+  it("should find replacement 'accord' for 'ccord'", function () {
+    const actual = spellChecker.checkWord('ccord', wordsList);
+    const expected = ['chord', 'accord'];
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("should find replacement 'scampi' for 'scmpi'", function () {
+    const actual = spellChecker.checkWord('scmpi', wordsList);
+    const expected = ['scampi'];
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("should find replacement 'rotting' for 'rottin'", function () {
+    const actual = spellChecker.checkWord('rottin', wordsList);
+    const expected = ['rotten', 'rotting'];
+
+    expect(actual).toEqual(expected);
+  });
+
   it("should find replacement 'aat' for 'cat'", function () {
-    const actual = spellChecker.findWordReplacement('aat', wordsList);
+    const actual = spellChecker.checkWord('aat', wordsList);
     const expected = ['bat', 'cat', 'eat', 'fat', 'hat', 'mat'];
 
     expect(actual).toEqual(expected);
   });
 
   it("should find replacement 'nilhes' for 'cat'", function () {
-    const actual = spellChecker.findWordReplacement('nilhes', wordsList);
+    const actual = spellChecker.checkWord('nilhes', wordsList);
     const expected = ['niches'];
 
     expect(actual).toEqual(expected);
