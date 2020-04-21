@@ -12755,8 +12755,6 @@ desalinating
 desalination
 descale
 descaled
-descales
-descaling
 descant
 descants
 descend

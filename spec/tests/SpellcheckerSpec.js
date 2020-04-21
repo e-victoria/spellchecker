@@ -47,6 +47,13 @@ describe("SpellChecker", function () {
     expect(actual).toEqual(expected);
   });
 
+  it("should find replacement 'descent' for 'decsent'", function () {
+    const actual = spellChecker.checkWord('decsent', wordsList);
+    const expected = new Set(['decent', 'descent']);
+
+    expect(actual).toEqual(expected);
+  });
+
   it("should find replacement 'rotting' for 'rottin'", function () {
     const actual = spellChecker.checkWord('rottin', wordsList);
     const expected = new Set(['rotten', 'rotting']);
@@ -57,6 +64,13 @@ describe("SpellChecker", function () {
   it("should find replacement 'divestment' for 'rdivestment'", function () {
     const actual = spellChecker.checkWord('rdivestment', wordsList);
     const expected = new Set(['divestment']);
+
+    expect(actual).toEqual(expected);
+  });
+
+  it("should find replacement 'quizzed' for 'quizzde'", function () {
+    const actual = spellChecker.checkWord('quizzde', wordsList);
+    const expected = new Set(['quizzed']);
 
     expect(actual).toEqual(expected);
   });

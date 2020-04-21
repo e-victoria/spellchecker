@@ -17,6 +17,7 @@ export default class SpellChecker {
     }
 
     checkWord(word, wordsList) {
+        let replacementByCharacterSwaping: Array<string>;
         let replacementByCharacterAdding: Array<string>;
         let replacementByCharacterDeleting: Array<string>;
         let replacementByCharacterReplacement: Array<string>;
@@ -24,10 +25,11 @@ export default class SpellChecker {
             console.log('ok, it\'s a word!');
         }
         else {
+            replacementByCharacterSwaping = this.findWordByCharactersSwaping(word, wordsList);
             replacementByCharacterDeleting = this.findWordByCharacterDeleting(word, wordsList);
             replacementByCharacterAdding = this.findWordByCharacterAdding(word, wordsList);
             replacementByCharacterReplacement = this.findWordByCharacterReplacement(word, wordsList);
-            let replacement = new Set([...replacementByCharacterReplacement, ...replacementByCharacterAdding, ...replacementByCharacterDeleting]);
+            let replacement = new Set([...replacementByCharacterReplacement, ...replacementByCharacterAdding, ...replacementByCharacterDeleting, ...replacementByCharacterSwaping]);
             if (replacement.size > 0) {
                 console.log(`Maybe you meant: ${Array.from(replacement)}?`);
             } else {
@@ -37,7 +39,38 @@ export default class SpellChecker {
         }
     }
 
-    findWordByCharacterDeleting(word, wordsList) {
+    findWordByCharactersSwaping(word, wordsList): Array<string> {
+        let replacement: Array<string> = [];
+        let newWord: string;
+
+        for (let i: number = 0; i < word.length; i+=2) {
+            const letterToSwapA = word.substring(i, i + 1);
+            const letterToSwapB = word.substring(i + 1, i + 2);
+            newWord = word.substring(0, i) + letterToSwapB + letterToSwapA + word.substring(i + 2);
+            if (wordsList.has(newWord)) {
+                replacement.push(newWord);
+            }
+            if (replacement.length > 3) {
+                break;
+            }
+        }
+
+        for (let i: number = 1; i < word.length; i+=2) {
+            const letterToSwapA = word.substring(i, i + 1);
+            const letterToSwapB = word.substring(i + 1, i + 2);
+            newWord = word.substring(0, i) + letterToSwapB + letterToSwapA + word.substring(i + 2);
+            if (wordsList.has(newWord)) {
+                replacement.push(newWord);
+            }
+            if (replacement.length > 3) {
+                break;
+            }
+        }
+
+        return replacement;
+    }
+
+    findWordByCharacterDeleting(word, wordsList): Array<string> {
         let replacement: Array<string> = [];
         let newWord: string;
 
@@ -51,15 +84,10 @@ export default class SpellChecker {
             }
         }
 
-        // newWord = word.substring(0, i) + word.substring(i + 1, word.length);
-        //     if (wordsList.has(newWord)) {
-        //         replacement.push(newWord);
-        //     }
-
         return replacement;
     }
 
-    findWordByCharacterAdding(word, wordsList) {
+    findWordByCharacterAdding(word, wordsList): Array<string> {
         let replacement: Array<string> = [];
         let newWord: string;
 
@@ -88,7 +116,7 @@ export default class SpellChecker {
         return replacement;
     }
 
-    findWordByCharacterReplacement(word, wordsList) {
+    findWordByCharacterReplacement(word, wordsList): Array<string> {
         let replacement: Array<string> = [];
         let newWord: string;
 
